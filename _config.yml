@@ -1,4 +1,13 @@
+#--------------------------------------------------
+# Site settings
+#--------------------------------------------------
 theme: minima
 author: subnetspider
 lang: en
 icon: 😈
+
+#--------------------------------------------------
+# Social Media
+#--------------------------------------------------
+github_username: subnetspider
+twitter_username: @subnetspider
