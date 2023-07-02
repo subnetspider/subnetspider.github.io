@@ -61,7 +61,9 @@ On the other hand, all clients have an IPv4 address assigned via DHCP and an IPv
 	- Save > Apply
 
 You can find out more here: [Configure IPv6 for generic DSL dialup](https://docs.opnsense.org/manual/how-tos/ipv6_dsl.html)
+
 > ℹ️ **Note**
+> 
 > The prefix delegation size may vary from ISP to ISP.
 
 **LAN interface**
@@ -76,6 +78,7 @@ You can find out more here: [Configure IPv6 for generic DSL dialup](https://docs
 	- Save > Apply
 
 > ℹ️ **Note**
+> 
 > For each additional interface, increase the value of "IPv6 prefix ID" by one.
 
 **Virtual IPs**
@@ -89,6 +92,7 @@ You can find out more here: [Configure IPv6 for generic DSL dialup](https://docs
 	- Save > Apply
 
 > ℹ️ **Note**
+> 
 > If you have subnets where all hosts have static ULA addresses, you can check the box "Deny service binding".
 > This way, OPNsense only sends router advertisements for the global prefix it gets from "track interface", so no additional ULA addresses are generated on your hosts.
 
@@ -145,8 +149,16 @@ sudo service routing restart
 ```
 
 > ℹ️ **Note**
+> 
 > Change the interface name `vtnet0` to the interface used by your FreeBSD hosts.
 > You can also omit the interface name in the first command, which will restart all interfaces.
+
+> ❗ Important
+>
+> In some of my FreeBSD 13.2-RELEASE VNET jails, the default IPv6 route wouldn't be set no matter what commands I ran.
+> Even if you're not experiencing connectivity problems, I recommend restarting VNET jails rather than running the commands above.
+> At this point, I am not shure if this is caused by the OPNsense router advertisement daemon `radvd` or FreeBSD router solicitation daemon `rtsold`.
+> As soon as I find out, I will update this post accordingly.
 
 And, it works:
 
