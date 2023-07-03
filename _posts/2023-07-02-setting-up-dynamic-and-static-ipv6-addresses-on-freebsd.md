@@ -89,12 +89,13 @@ You can find out more here: [Configure IPv6 for generic DSL dialup](https://docs
 	-  Mode: **Alias**
 	-  Interface: **LAN**
 	- Network / Address: **fd00:10::1/64**
+ 	- Deny service binding: **-**	
 	- Save > Apply
 
 > ℹ️ **Note**
 > 
-> If you have subnets where all hosts have static ULA addresses, you can check the box "Deny service binding".
-> This way, OPNsense only sends router advertisements for the global prefix it gets from "track interface", so no additional ULA addresses are generated on your hosts.
+> Make sure the "Deny service binding" checkbox is not ticked.
+> I had problems reaching other devices with ULA addresses in different subnets when this was unchecked.
 
 **Firewall rules**
 
