@@ -1,5 +1,5 @@
 ---
-title: subnetspider's Blog
+title: Welcome to my Blog
 author: subnetspider
 description: Notes and ideas
 ---
