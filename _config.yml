@@ -10,14 +10,13 @@ icon: 😈
 #--------------------------------------------------
 # Social Media
 #--------------------------------------------------
-social-network-links:
-  github_username: subnetspider
-  twitter_username: subnetspider
+github_username: subnetspider
+twitter_username: subnetspider
 
 #--------------------------------------------------
 # General options
 #--------------------------------------------------
-url-pretty: "subnetspider.com"
+#url-pretty: "subnetspider.com"
 
 exclude:
   - CNAME
