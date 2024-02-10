@@ -2,6 +2,7 @@
 # Site settings
 #--------------------------------------------------
 theme: minima
+title: Subnetspider's Blog
 author: subnetspider
 lang: en
 icon: 😈
@@ -9,5 +10,16 @@ icon: 😈
 #--------------------------------------------------
 # Social Media
 #--------------------------------------------------
-github_username: subnetspider
-twitter_username: subnetspider
+social-network-links:
+  github_username: subnetspider
+  twitter_username: subnetspider
+
+#--------------------------------------------------
+# General options
+#--------------------------------------------------
+url-pretty: "subnetspider.com"
+
+exclude:
+  - CNAME
+  - LICENSE
+  - README.md
