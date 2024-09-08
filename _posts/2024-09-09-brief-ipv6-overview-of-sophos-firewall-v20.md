@@ -49,9 +49,16 @@ However, the free license limits the usable CPU cores/threads to 4 and the usabl
 | NAT64                  | No          |
 | DNS64                  | No          |
 
-1 - IPv4 and IPv6 Rules have their own seperate table, also IPv4/IPv6 rules and objects cant have the same name.
-2 - It is not possible to use a IPv6 Link Local Address as Next Hop when using Route-Based IPSec VPN.
-3 - OSPFv3 is very limited in the GUI, advanced features are only accessible from the CLI. 
-4 - DNS information via Router Advertisements is not supported.
-5 - It is not possible to send additional IPv6 prefixes via Router Advertisement on an interface which uses Prefix Delegation.
+**Notes**
+1. IPv4 and IPv6 Rules have their own seperate table, also IPv4/IPv6 rules and objects cant have the same name.
+2. It is not possible to use a IPv6 Link Local Address as Next Hop when using Route-Based IPSec VPN.
+3. OSPFv3 is very limited in the GUI, advanced features are only accessible from the CLI. 
+4. DNS information via Router Advertisements is not supported.
+5. It is not possible to send additional IPv6 prefixes via Router Advertisement on an interface which uses Prefix Delegation.
 
+### Conclusion
+
+It is possible to use IPv6 with Sophos Firewall, but there is still a lot of room for improvement.
+The thing that annoyed me the most is that I can't send IPv6 DNS servers via mDNS, and that I can't use a second ULA prefix when using Prefix Delegation.
+But also not being able to use IPv6 SD-WAN Rules and Profiles, feels rather lacking.
+As Sophos Firewall's WAF does not support IPv6, I now use HAProxy in a FreeBSD jail again.
