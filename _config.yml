@@ -14,7 +14,7 @@ github_username: subnetspider
 twitter_username: subnetspider
 mastodon:
 - username: subnetspider
-  instance: bsd.cafe
+  instance: mastodon.bsd.cafe
 
 #--------------------------------------------------
 # General options
