@@ -12,6 +12,9 @@ icon: 😈
 #--------------------------------------------------
 github_username: subnetspider
 twitter_username: subnetspider
+mastodon:
+- username: subnetspider
+  instance: bsd.cafe
 
 #--------------------------------------------------
 # General options
