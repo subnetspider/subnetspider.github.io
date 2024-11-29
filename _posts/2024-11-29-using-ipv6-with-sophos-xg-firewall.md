@@ -25,7 +25,7 @@ In November 2024, I upgraded both firewalls to SFOS v21, but everything remained
 
 **Hardware used**:
 
-|     |                           | 
+| Type | Details                  | 
 | --- | ------------------------- |
 | CPU | AMD GX-222GC (2x 2.2 GHz) |
 | RAM | 8 GB DDR3 SO-DIMM         |
@@ -61,7 +61,7 @@ IPv6 firewall rules have a separate rules table, so you can't create single fire
 Also, both firewall rules and firewall objects cannot have the same name, which is a downgrade compared to OPNsense.
 One thing I really like though is the Zones feature, which makes it very easy to block or allow traffic when using a dynamic IPv6 prefix.
 
-> [!Info] As of November 2024, you can't use FQDN firewall objects in IPv6 firewall rules, which would be very useful for dynamic IPv6 hosts.
+> ℹ️ As of November 2024, you can't use FQDN firewall objects in IPv6 firewall rules, which would be very useful for dynamic IPv6 hosts.
 
 ---
 
@@ -87,7 +87,7 @@ This feature was first requested in 2017, so many Sophos Firewall users have bee
 
 As most ISPs sadly only assign dynamic IPv6 prefixes, this feature is very important as you can now use them.
 
-> [!Info] You can only request prefixes with a length of /48, /52, /56, or /60.
+> ℹ️ You can only request prefixes with a length of /48, /52, /56, or /60.
 
 ---
 
@@ -113,7 +113,7 @@ You can also use IPv6 GUA and ULA prefixes inside the SA of your tunnel, or use 
 Sophos XG Firewall uses strongSwan under the hood, but with some "tweaks" made by Sophos. 
 This can sometimes cause interesting behaviour when using IPSec with different vendors.
 
-> [!Info] You can only use IPSec if your WAN interface has a static IPv6 address assigned to it.
+> ℹ️ You can only use IPSec if your WAN interface has a static IPv6 address assigned to it.
 
 ---
 
@@ -142,7 +142,7 @@ As this is the only way to get static ULA IPv6 addresses via SLAAC if your ISP o
 If you want to hand out IPv6 addresses to clients the traditional way, you can use DHCPv6 with Sophos Firewall.
 In my case, I only use it to send IPv6 DNS servers to my devices, except Androud, as mentioned before.
 
-> [!Info] You can only use DHCPv6 to send DNS servers when using prefix delegation on an interface.
+> ℹ️ You can only use DHCPv6 to send DNS servers when using prefix delegation on an interface.
 
 ---
 
