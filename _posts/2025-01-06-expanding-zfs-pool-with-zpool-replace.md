@@ -7,10 +7,11 @@ tags: FreeBSD OpenZFS Storage
 
 # Expanding a ZFS pool with zpool-replace
 
-
 ### Goal
 
 The goal of this post is to show how I replaced two old disks in one of my FreeBSD servers ZFS pool with larger disks to increase the amount of storage available.
+
+---
 
 ### Background
 
@@ -30,5 +31,24 @@ After migrating all of my storage and jails away from TrueNAS CORE to my new Fre
 As [this second FreeBSD server]([url](https://x.com/subnetspider/status/1555282371448111104)) which at one point was my TrueNAS CORE server, already had all of its four SATA ports used up (two SSDs as the boot pool, as well as two HDDs as the storage pool), I removed all the disks and installed them in another PC.
 This way I can replace the old 4 TB disks one by one with the new 18 TB disks without having to remove them and degrade the ZFS pool, but still maintain the redundancy of the mirror until the very end.
 
+---
+
 ### Commands
+
+The commands I uses to accomplish the goal are the following:
+
+- [camcontrol(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=camcontrol(8))) - CAM control program
+- [doas(1)]([url](https://man.freebsd.org/cgi/man.cgi?query=doas(1))) - execute commands as another user
+- [glabel(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=glabel(8))) - disk labelization control utility
+- [gpart(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=gpart(8))) - control utility for the disk partitioning GEOM class
+- [zfs-list(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=zfs-list(8))) - list properties of ZFS datasets
+- [zpool-replace(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=zpool-replace(8))) - replace one device with another in ZFS storage pool
+- [zpool-list(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=zpool-list(8))) - list information about ZFS storage pools
+- [zpool-status(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=zpool-status(8))) - show detailed health status for ZFS storage pools
+- [zpool-online(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=zpool-online(8))) - take physical devices offline in ZFS storage pool
+
+I have linked the corresponding man pages if you want to read more about them.
+
+---
+
 
