@@ -53,8 +53,6 @@ I have linked the corresponding man pages if you want to read more about them.
 
 ## Getting started
 
----
-
 ### Identify your disks
 
 First, shut down your server, install the new disks, and then turn it back on again.
@@ -96,8 +94,6 @@ admin@nas01:~ % doas gpart destroy -F ada0
 ```shell
 admin@nas01:~ % doas gpart destroy -F ada1
 ```
-
----
 
 ### Create partitions
 
@@ -168,8 +164,6 @@ admin@nas01:~ % glabel status ada0p1 ada1p1
 gpt/HDD22     N/A  ada0p1
 gpt/HDD23     N/A  ada1p1
 ```
-
----
 
 ### Replace your disks
 
@@ -247,8 +241,6 @@ config:
 errors: No known data errors
 ```
 
----
-
 ### Grow your pool
 
 By default, the zpool property `autoexpand` is disabled on FreeBSD:
@@ -287,8 +279,6 @@ data-pool      16.4T  1.53T  14.8T        -         -     0%     9%  1.00x    ON
     gpt/HDD22  16.4T      -      -        -         -      -      -      -    ONLINE
     gpt/HDD23  16.4T      -      -        -         -      -      -      -    ONLINE
 ```
-
----
 
 ### Conclusion
 
