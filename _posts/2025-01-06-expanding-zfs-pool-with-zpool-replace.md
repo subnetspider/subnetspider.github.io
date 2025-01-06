@@ -135,4 +135,27 @@ doas gpart add -s 18000000000000B -t freebsd-zfs -l "HDD23" -a 4K "ada1"
 I would have liked to just use `-s 18TB` for the partition size instead, but it seems that `gpart` expects `KiB, MiB, GiB` and `TiB` values that are powers of 2 instead of powers of 10, like `KB, MB, GB` and `TB`.
 Since this doesn't seem to be possible with `gpart`, I just added twelve zeros after the 18 to create a partition that is exactly 18 TB big.
 
-### 
+To check if you have created your partitions correctly, run the following commands:
+
+```shell
+admin@nas01:~ % gpart show ada0 ada1
+=>         40  35156656048  ada0  GPT  (16T)
+           40  35156250000     1  freebsd-zfs  (16T)
+  35156250040       406048        - free -  (198M)
+
+=>         40  35156656048  ada1  GPT  (16T)
+           40  35156250000     1  freebsd-zfs  (16T)
+  35156250040       406048        - free -  (198M)
+```
+```shell
+admin@nas01:~ % glabel status ada0p1 ada1p1
+     Name  Status  Components
+gpt/HDD22     N/A  ada0p1
+gpt/HDD23     N/A  ada1p1
+```
+
+### Replace your disks
+
+```shell
+
+```
