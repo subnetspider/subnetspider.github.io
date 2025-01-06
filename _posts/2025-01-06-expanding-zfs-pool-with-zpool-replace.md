@@ -275,7 +275,7 @@ admin@nas01:~ % doas zpool online -e data-pool gpt/HDD23
 
 > ℹ️ Note
 >
-> If you grow your ZFS pool, you can't reduce it's size anymore, unless you have created a `zpool checkpoint`.
+> If you grow your ZFS pool, you won't be able to shrink it afterwards unless you have created a `zpool checkpoint` beforehand.
 
 Now you can make use of the extra space in your ZFS pool:
 ```shell
@@ -291,3 +291,6 @@ data-pool      16.4T  1.53T  14.8T        -         -     0%     9%  1.00x    ON
 
 ### Conclusion
 
+You have now (hopefully) successfully upgraded the disks in your ZFS pool and are ready to use the additional capacity.
+The old disks can now be safely removed from your server and/or reused for other projects.
+If you have set up SMART monitoring for your disks, don't forget to update your `/usr/local/etc/smartd.conf`.
