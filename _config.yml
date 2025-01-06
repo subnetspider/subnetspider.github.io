@@ -25,3 +25,6 @@ exclude:
   - CNAME
   - LICENSE
   - README.md
+
+switch_light: ☀️
+switch_dark: 🌑
