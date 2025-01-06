@@ -51,4 +51,41 @@ I have linked the corresponding man pages if you want to read more about them.
 
 ---
 
+### The process
+
+First, shut down your server, install the new disks, and then turn it back on again.
+On some systems you can add the new disks while the server is running, YMMV.
+
+Next, list all your available disks to see which is which:
+```shell
+admin@nas01:~ % doas camcontrol devlist
+<TOSHIBA MG09ACA18TE 0104>         at scbus0 target 0 lun 0 (pass0,ada0)
+<TOSHIBA MG09ACA18TE 0105>         at scbus1 target 0 lun 0 (pass1,ada1)
+<Hitachi HDS724040ALE640 MJAOA3B0>  at scbus2 target 0 lun 0 (pass2,ada2)
+<Hitachi HDS724040ALE640 MJAOA3B0>  at scbus3 target 0 lun 0 (pass3,ada3)
+<INTEL SSDSC2BB080G4 D2012370>     at scbus4 target 0 lun 0 (pass4,ada4)
+<INTEL SSDSC2BB080G4 D2012370>     at scbus5 target 0 lun 0 (pass5,ada5)
+<AHCI SGPIO Enclosure 2.00 0001>   at scbus6 target 0 lun 0 (ses0,pass6)
+```
+The Toshiba disks `ada0` and `ada1` are the new 18 TB disks, the Hitagi `ada2` and `ada3` are the old disks.
+The two Intel disks are where FreeBSD is installed on.
+
+> ℹ️ Note
+> Your discs may be labelled differently, such as `da0`, `da1` and so on.
+> Also keep in mind that these device nodes are not permanent and can change.
+
+After you indentified which disk is which, we can prepare the new disk for the ZFS pool.
+If your new disks already have a file system, delete them with the following command:
+
+> ⚠️ Warning
+> Make sure and double check that you have selected the correct disk!
+> Selecting the wrong disk will result in permanent data loss!
+
+```shell
+doas gpart destroy -F ada0 # This is the first new 18 TB disk.
+```
+
+```shell
+doas gpart destroy -F ada1 # This is the second new 18 TB disk.
+```
 
