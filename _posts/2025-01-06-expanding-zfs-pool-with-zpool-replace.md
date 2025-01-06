@@ -77,7 +77,7 @@ The two Intel disks are where FreeBSD is installed on.
 > Your discs may be labelled differently, such as `da0`, `da1` and so on.
 > Also keep in mind that these device nodes are not permanent and can change.
 
-# Prere your disks
+### Prepare your disks
 
 After you indentified which disk is which, we can prepare the new disk for the ZFS pool.
 If your new disks already have a file system, delete them with the following command:
@@ -94,7 +94,7 @@ doas gpart destroy -F ada0 # This is the first new 18 TB disk.
 doas gpart destroy -F ada1 # This is the second new 18 TB disk.
 ```
 
-# Create partitions
+### Create partitions
 
 Now we can create a GPT partition table on the new disks:
 
