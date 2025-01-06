@@ -13,7 +13,7 @@ The goal of this post is to show how I replaced two old disks in one of my FreeB
 
 ---
 
-### Background
+## Background
 
 For the last month I've been working on migrating my storage to FreeBSD, which has been managed by the FreeNAS / TrueNAS CORE since the beginning of 2019.
 [A year ago]([url](https://x.com/subnetspider/status/1742303228438761484)) I decided to consolidate two of my servers, one running FreeBSD 14.0 and hosting most of my services in bastille jails, the other running TrueNAS CORE for my storage.
@@ -33,7 +33,7 @@ This way I can replace the old 4 TB disks one by one with the new 18 TB disks wi
 
 ---
 
-### Commands
+## Commands
 
 The commands I uses to accomplish the goal are the following:
 
@@ -51,7 +51,9 @@ I have linked the corresponding man pages if you want to read more about them.
 
 ---
 
-### The process
+## The process
+
+### Identify your disks
 
 First, shut down your server, install the new disks, and then turn it back on again.
 On some systems you can add the new disks while the server is running, YMMV.
@@ -75,6 +77,8 @@ The two Intel disks are where FreeBSD is installed on.
 > Your discs may be labelled differently, such as `da0`, `da1` and so on.
 > Also keep in mind that these device nodes are not permanent and can change.
 
+# Prere your disks
+
 After you indentified which disk is which, we can prepare the new disk for the ZFS pool.
 If your new disks already have a file system, delete them with the following command:
 
@@ -89,6 +93,8 @@ doas gpart destroy -F ada0 # This is the first new 18 TB disk.
 ```shell
 doas gpart destroy -F ada1 # This is the second new 18 TB disk.
 ```
+
+# Create partitions
 
 Now we can create a GPT partition table on the new disks:
 
@@ -129,3 +135,4 @@ doas gpart add -s 18000000000000B -t freebsd-zfs -l "HDD23" -a 4K "ada1"
 I would have liked to just use `-s 18TB` for the partition size instead, but it seems that `gpart` expects `KiB, MiB, GiB` and `TiB` values that are powers of 2 instead of powers of 10, like `KB, MB, GB` and `TB`.
 Since this doesn't seem to be possible with `gpart`, I just added twelve zeros after the 18 to create a partition that is exactly 18 TB big.
 
+### 
