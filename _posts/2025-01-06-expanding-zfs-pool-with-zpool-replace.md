@@ -98,3 +98,34 @@ doas gpart create -s gpt ada0
 ```shell
 doas gpart create -s gpt ada1
 ```
+
+Next, we will create a partition for ZFS to use.
+It is also possible to use the raw disks (e.g. `ada0` and `ada1`) with ZFS, but as these names are dynamically assigned, it can be confusing to find the correct disk after one has failed.
+
+If you want to learn more, I recommend reading the following blog posts:
+- https://bsdbox.de/en/artikel/freebsd-server/freebsd-server-speicher
+- https://vermaden.wordpress.com/2019/06/19/freebsd-enterprise-1-pb-storage/
+
+Show how many bytes your disk has:
+```shell
+admin@nas01:~ % gpart list ada0 | grep Mediasize
+   Mediasize: 18000207937536 (16T)
+```
+
+To make sure we won't run into a problem where ZFS refuses to use a new disk, because it is a few sectors smaller, we will leave some space unused.
+Because I like even numbers, I will reserve the additional `207937536` bytes (about 208 MB) at the end of the disk:
+
+```shell
+doas gpart add -s 18000000000000B -t freebsd-zfs -l "HDD22" -a 4K "ada0"
+```
+```shell
+doas gpart add -s 18000000000000B -t freebsd-zfs -l "HDD23" -a 4K "ada1"
+```
+
+> ℹ️ Note
+> 
+> The `-s` flag specifies the size of the partition, the `-t` flage the type, which is `freebsd-zfs`, the `-l` flag is for our custom label, and the `-a` flag is to aligh the partition to 4K sectors on the disks.
+
+I would have liked to just use `-s 18TB` for the partition size instead, but it seems that `gpart` expects `KiB, MiB, GiB` and `TiB` values that are powers of 2 instead of powers of 10, like `KB, MB, GB` and `TB`.
+Since this doesn't seem to be possible with `gpart`, I just added twelve zeros after the 18 to create a partition that is exactly 18 TB big.
+
