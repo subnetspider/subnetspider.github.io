@@ -243,8 +243,51 @@ errors: No known data errors
 
 ---
 
-### Gowing your pool
+### Grow your pool
 
+By default, the zpool property `autoexpand` is disabled on FreeBSD:
 ```shell
-
+admin@nas01:~ % zpool get autoexpand data-pool
+NAME       PROPERTY    VALUE   SOURCE
+data-pool  autoexpand  off     default
 ```
+
+This means your ZFS pool won't use the additional capacity automatically: 
+```shell
+admin@nas01:~ % zfs list data-pool
+NAME        USED  AVAIL  REFER  MOUNTPOINT
+data-pool  1.53T  1.98T   296K  /mnt/data-pool
+```
+```shell
+admin@nas01:~ % zpool list -v data-pool
+NAME            SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+data-pool      3.62T  1.53T  2.10T        -         -     0%    42%  1.00x    ONLINE  -
+  mirror-0     3.62T  1.53T  2.10T        -         -     0%  42.1%      -    ONLINE
+    gpt/HDD22  16.4T      -      -        -         -      -      -      -    ONLINE
+    gpt/HDD23  16.4T
+```
+
+Instead of setting the `zpool` property `autoexpand` to `on`, I want to do things manually, so I use the following command instead:
+```shell
+admin@nas01:~ % doas zpool online -e data-pool gpt/HDD22
+admin@nas01:~ % doas zpool online -e data-pool gpt/HDD23
+```
+
+> ℹ️ Note
+>
+> If you grow your ZFS pool, you can't reduce it's size anymore, unless you have created a `zpool checkpoint`.
+
+Now you can make use of the extra space in your ZFS pool:
+```shell
+admin@nas01:~ % zpool list -v data-pool
+NAME            SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+data-pool      16.4T  1.53T  14.8T        -         -     0%     9%  1.00x    ONLINE  -
+  mirror-0     16.4T  1.53T  14.8T        -         -     0%  9.33%      -    ONLINE
+    gpt/HDD22  16.4T      -      -        -         -      -      -      -    ONLINE
+    gpt/HDD23  16.4T      -      -        -         -      -      -      -    ONLINE
+```
+
+---
+
+### Conclusion
+
