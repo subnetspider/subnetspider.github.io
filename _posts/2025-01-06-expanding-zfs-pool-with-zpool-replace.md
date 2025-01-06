@@ -53,6 +53,8 @@ I have linked the corresponding man pages if you want to read more about them.
 
 ## The process
 
+---
+
 ### Identify your disks
 
 First, shut down your server, install the new disks, and then turn it back on again.
@@ -75,6 +77,7 @@ The two Intel disks are where FreeBSD is installed on.
 > ℹ️ Note
 > 
 > Your discs may be labelled differently, such as `da0`, `da1` and so on.
+> 
 > Also keep in mind that these device nodes are not permanent and can change.
 
 ### Prepare your disks
@@ -85,6 +88,7 @@ If your new disks already have a file system, delete them with the following com
 > ⚠️ Warning
 > 
 > Make sure and double check that you have selected the correct disk!
+> 
 > Selecting the wrong disk will result in permanent data loss!
 
 ```shell
@@ -94,10 +98,11 @@ doas gpart destroy -F ada0 # This is the first new 18 TB disk.
 doas gpart destroy -F ada1 # This is the second new 18 TB disk.
 ```
 
+---
+
 ### Create partitions
 
 Now we can create a GPT partition table on the new disks:
-
 ```shell
 doas gpart create -s gpt ada0
 ```
@@ -105,22 +110,27 @@ doas gpart create -s gpt ada0
 doas gpart create -s gpt ada1
 ```
 
-Next, we will create a partition for ZFS to use.
-It is also possible to use the raw disks (e.g. `ada0` and `ada1`) with ZFS, but as these names are dynamically assigned, it can be confusing to find the correct disk after one has failed.
+Next we will create partitions for ZFS to use.
+It is also possible to use the raw discs (e.g. `ada0` and `ada1`) with ZFS, but as these names are assigned dynamically, it can be confusing to find the correct disc after a failure.
+The reason I name my discs `HDD01, HDD02, ...` is because I have labelled them all with a label maker and documented their serial and model numbers in NetBox. 
 
-If you want to learn more, I recommend reading the following blog posts:
+If you want to learn more about using ZFS with disk partitions, I recommend reading the following blog posts:
 - https://bsdbox.de/en/artikel/freebsd-server/freebsd-server-speicher
 - https://vermaden.wordpress.com/2019/06/19/freebsd-enterprise-1-pb-storage/
 
-Show how many bytes your disk has:
+To check the raw storage capacity of the new disks, run the following command:
 ```shell
 admin@nas01:~ % gpart list ada0 | grep Mediasize
    Mediasize: 18000207937536 (16T)
 ```
+> ℹ️ Note
+> 
+> You can also check the raw capacity of your disk with `gpart show ada0`, but keep in mind that these values have to be multiplied by the sector size reported by your disk.
+>
+> Most disk lie about their actual sector size, which today is almost always 4K, but in my case, the disk reports a sector size of 512 bytes.
 
 To make sure we won't run into a problem where ZFS refuses to use a new disk, because it is a few sectors smaller, we will leave some space unused.
 Because I like even numbers, I will reserve the additional `207937536` bytes (about 208 MB) at the end of the disk:
-
 ```shell
 doas gpart add -s 18000000000000B -t freebsd-zfs -l "HDD22" -a 4K "ada0"
 ```
@@ -136,7 +146,6 @@ I would have liked to just use `-s 18TB` for the partition size instead, but it 
 Since this doesn't seem to be possible with `gpart`, I just added twelve zeros after the 18 to create a partition that is exactly 18 TB big.
 
 To check if you have created your partitions correctly, run the following commands:
-
 ```shell
 admin@nas01:~ % gpart show ada0 ada1
 =>         40  35156656048  ada0  GPT  (16T)
@@ -154,7 +163,87 @@ gpt/HDD22     N/A  ada0p1
 gpt/HDD23     N/A  ada1p1
 ```
 
+---
+
 ### Replace your disks
+
+The old 4 TB disks also use a partition for ZFS:
+```shell
+admin@nas01:~ % zpool status data-pool
+NAME             STATE     READ WRITE CKSUM
+data-pool        ONLINE       0     0     0
+  mirror-0       ONLINE       0     0     0
+    gpt/HDD09    ONLINE       0     0     0
+    gpt/HDD10    ONLINE       0     0     0
+```
+
+To replace the first disk, run the following command:
+```shell
+admin@nas01:~ % doas zpool replace data-pool /dev/gpt/HDD09 /dev/gpt/HDD22
+```
+
+> ℹ️ Note
+> 
+> This process will take some time to complete.
+>
+> Depending on the amount of data stored on your pool, you may have to wait from a few hours to a day or two.
+
+To see the current progress, run the following command:
+```shell
+zpool status -v data-pool
+  pool: data-pool
+ state: ONLINE
+status: One or more devices is currently being resilvered.  The pool will
+	continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Mon Jan  6 01:33:12 2025
+	1.36T / 1.53T scanned at 1.37G/s, 76.2G / 1.53T issued at 76.9M/s
+	76.3G resilvered, 4.87% done, 05:30:06 to go
+config:
+
+	NAME             STATE     READ WRITE CKSUM
+	data-pool        ONLINE       0     0     0
+	  mirror-0       ONLINE       0     0     0
+	    replacing-0  ONLINE       0     0     0
+	      gpt/HDD09  ONLINE       0     0     0
+	      gpt/HDD22  ONLINE       0     0     0  (resilvering)
+	    gpt/HDD10    ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+To replace the second disk, run the following command:
+```shell
+admin@nas01:~ % doas zpool replace data-pool /dev/gpt/HDD10 /dev/gpt/HDD23
+```
+
+To see the current progress, run the following command again:
+```shell
+admin@nas01:~ % zpool status -v data-pool
+  pool: data-pool
+ state: ONLINE
+status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Mon Jan  6 10:34:48 2025
+        1.30T / 1.53T scanned at 22.9G/s, 5.93G / 1.53T issued at 105M/s
+        5.92G resilvered, 0.38% done, 04:13:47 to go
+config:
+
+        NAME             STATE     READ WRITE CKSUM
+        data-pool        ONLINE       0     0     0
+          mirror-0       ONLINE       0     0     0
+            gpt/HDD22    ONLINE       0     0     0
+            replacing-1  ONLINE       0     0     0
+              gpt/HDD10  ONLINE       0     0     0
+              gpt/HDD23  ONLINE       0     0     0  (resilvering)
+
+errors: No known data errors
+```
+
+---
+
+### Gowing your pool
 
 ```shell
 
