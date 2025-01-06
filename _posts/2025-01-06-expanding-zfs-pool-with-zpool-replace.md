@@ -17,7 +17,7 @@ For the last month I've been working on migrating my storage to FreeBSD, which h
 [A year ago]([url](https://x.com/subnetspider/status/1742303228438761484)) I decided to consolidate two of my servers, one running FreeBSD 14.0 and hosting most of my services in bastille jails, the other running TrueNAS CORE for my storage.
 This was mainly to save a bit of power, as the FreeBSD jail server was way overkill, using only 8 of 64 GiB of RAM and less than 30 of 500 GB of NVMe storage, with the i3-10100 CPU mostly idle, 1-2% usage.
 
-Unfortunately, just as I finished migrating my bastille jails on FreeBSD to iocage on TrueNAS CORE, users started questioning [the future of TrueNAS CORE]([url](https://www.truenas.com/community/threads/what-is-the-future-of-truenas-core.116049/)).
+Unfortunately, just as I finished migrating my bastille jails on FreeBSD to iocage on TrueNAS CORE, the community started questioning [the future of TrueNAS CORE]([url](https://www.truenas.com/community/threads/what-is-the-future-of-truenas-core.116049/)).
 This was no surprise, as iXsystems' focus seemed to be shifting more and more to Linux with their new TrueNAS Scale appliance, and the FreeBSD base of TrueNAS CORE was nearing the end of its life.
 While the community was promised that TrueNAS CORE wouldn't be deprecated, many saw the writing on the wall, which was later confirmed when iXsystems said that they have [no plans to upgrade to FreeBSD 14]([url](https://www.theregister.com/2024/03/18/truenas_abandons_freebsd/)).
 
@@ -44,13 +44,14 @@ The commands I uses to accomplish the goal are the following:
 - [zpool-online(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=zpool-online(8))) - take physical devices offline in ZFS storage pool
 
 I have linked the corresponding man pages if you want to read more about them.
+In this post I will be using doas (opendoas) for elevated privileges, you can also use sudo or run the commands as root. 
 
 ## Getting started
 
-### Identify your disks
+### Identifying your disks
 
 First, shut down your server, install the new disks, and then turn it back on again.
-On some systems you can add the new disks while the server is running, YMMV.
+> On some systems you can add the new disks while the server is running, YMMV.
 
 Next, list all your available disks to see which is which:
 ```shell
@@ -63,12 +64,10 @@ admin@nas01:~ % doas camcontrol devlist
 <INTEL SSDSC2BB080G4 D2012370>     at scbus5 target 0 lun 0 (pass5,ada5)
 <AHCI SGPIO Enclosure 2.00 0001>   at scbus6 target 0 lun 0 (ses0,pass6)
 ```
-The Toshiba disks `ada0` and `ada1` are the new 18 TB disks, the Hitagi `ada2` and `ada3` are the old disks.
+The Toshiba disks `ada0` and `ada1` are the new 18 TB disks, the Hitachi `ada2` and `ada3` are the old disks.
 
 > ℹ️ Note
-> 
 > Your disks may be labelled differently, such as `da0`, `da1` and so on.
-> 
 > Also keep in mind that these device nodes are not permanent and can change.
 
 ### Prepare your disks
@@ -77,9 +76,7 @@ Once you have identified which disk is which, we can prepare the new disks for t
 If your new disks already have a filesystem on them, delete it with the following command:
 
 > ⚠️ **Warning!**
-> 
 > **Make sure and double check that you have selected the correct disk!**
-> 
 > **Selecting the wrong disk will result in permanent data loss!**
 
 ```shell
@@ -129,13 +126,9 @@ admin@nas01:~ % doas gpart add -s 18000000000000B -t freebsd-zfs -l "HDD23" -a 4
 ```
 
 > ℹ️ Note
-> 
 > The `-s` flag specifies the size of the partition.
->
 > The `-t` flage the type, which is `freebsd-zfs`.
->
 > The `-l` flag is for our custom label (you can use the serial number instead).
->
 > The `-a` flag is to aligh the partition to 4K sectors on the disks.
 
 I would have liked to just use `-s 18TB` for the partition size instead, but it seems that `gpart` expects `KiB, MiB, GiB` and `TiB` values that are powers of 2 instead of powers of 10, like `KB, MB, GB` and `TB`.
@@ -152,6 +145,8 @@ admin@nas01:~ % gpart show ada0 ada1
            40  35156250000     1  freebsd-zfs  (16T)
   35156250040       406048        - free -  (198M)
 ```
+
+As we can see, there are now two partitions, `ada0p1` and `ada1p1`:
 ```shell
 admin@nas01:~ % glabel status ada0p1 ada1p1
      Name  Status  Components
@@ -177,9 +172,7 @@ admin@nas01:~ % doas zpool replace data-pool /dev/gpt/HDD09 /dev/gpt/HDD22
 ```
 
 > ℹ️ Note
-> 
 > This process will take some time to complete.
->
 > Depending on the amount of data stored on your pool, you may have to wait from a few hours to a day or two.
 
 To see the current progress of `zpool replace`, run the following command:
@@ -261,7 +254,6 @@ admin@nas01:~ % doas zpool online -e data-pool gpt/HDD23
 ```
 
 > ℹ️ Note
->
 > If you grow your ZFS pool, you won't be able to shrink it afterwards unless you have created a `zpool checkpoint` beforehand.
 
 Now you can make use of the extra space in your ZFS pool:
