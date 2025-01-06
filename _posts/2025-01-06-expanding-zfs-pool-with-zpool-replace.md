@@ -7,6 +7,11 @@ tags: FreeBSD OpenZFS Storage
 
 # Expanding a ZFS pool with zpool-replace
 
+
+### Goal
+
+The goal of this post is to show how I replaced two old disks in one of my FreeBSD servers ZFS pool with larger disks to increase the amount of storage available.
+
 ### Background
 
 For the last month I've been working on migrating my storage to FreeBSD, which has been managed by the FreeNAS / TrueNAS CORE since the beginning of 2019.
@@ -19,8 +24,11 @@ While the community was promised that TrueNAS CORE wouldn't be deprecated, many 
 
 As I have no plans to migrate away from FreeBSD and jails, which I've become very comfortable with over the last few years, to an unfamiliar system like Linux and Docker, I decided to leave TrueNAS behind and go full FreeBSD instead.
 At the same time, I decided to build a second FreeBSD NAS for my parents to use as an off-site backup and to speed up their storage needs (mostly Windows clients), as they currently access my NAS via a site-to-site VPN, which is severely bottlenecked by their cable ISP's slow upload speeds.
-Since I didn't have another pair of 18TB disks available to easily migrate all the data from TrueNAS CORE, I dug out some old 4TB disks that were actually from my first ever NAS, which ran OpenMediaVault before I switched to FreeNAS.
+Since I didn't have another pair of 18 TB disks available to easily migrate all the data from TrueNAS CORE, I dug out some old 4 TB disks that were actually from my first ever NAS, which ran OpenMediaVault before I switched to FreeNAS.
 
 After migrating all of my storage and jails away from TrueNAS CORE to my new FreeBSD NAS, those 18 TB disks were now available again, so I could now replace the old 4 TB disks for my parents NAS.
 As [this second FreeBSD server]([url](https://x.com/subnetspider/status/1555282371448111104)) which at one point was my TrueNAS CORE server, already had all of its four SATA ports used up (two SSDs as the boot pool, as well as two HDDs as the storage pool), I removed all the disks and installed them in another PC.
-This way I can replace the old 4TB disks one by one with the new 18TB disks without having to remove them and degrade the ZFS pool, but still maintain the redundancy of the mirror until the very end.
+This way I can replace the old 4 TB disks one by one with the new 18 TB disks without having to remove them and degrade the ZFS pool, but still maintain the redundancy of the mirror until the very end.
+
+### Commands
+
