@@ -71,6 +71,7 @@ The Toshiba disks `ada0` and `ada1` are the new 18 TB disks, the Hitagi `ada2` a
 The two Intel disks are where FreeBSD is installed on.
 
 > ℹ️ Note
+> 
 > Your discs may be labelled differently, such as `da0`, `da1` and so on.
 > Also keep in mind that these device nodes are not permanent and can change.
 
@@ -78,14 +79,22 @@ After you indentified which disk is which, we can prepare the new disk for the Z
 If your new disks already have a file system, delete them with the following command:
 
 > ⚠️ Warning
+> 
 > Make sure and double check that you have selected the correct disk!
 > Selecting the wrong disk will result in permanent data loss!
 
 ```shell
 doas gpart destroy -F ada0 # This is the first new 18 TB disk.
 ```
-
 ```shell
 doas gpart destroy -F ada1 # This is the second new 18 TB disk.
 ```
 
+Now we can create a GPT partition table on the new disks:
+
+```shell
+doas gpart create -s gpt ada0
+```
+```shell
+doas gpart create -s gpt ada1
+```
