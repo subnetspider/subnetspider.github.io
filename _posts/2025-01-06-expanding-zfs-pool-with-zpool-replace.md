@@ -11,8 +11,6 @@ tags: FreeBSD OpenZFS Storage
 
 The goal of this post is to show how I replaced two old disks in one of my FreeBSD servers ZFS pool with larger disks to increase the storage capacity.
 
----
-
 ## Background
 
 For the last month I've been working on migrating my storage to FreeBSD, which has been managed by the FreeNAS / TrueNAS CORE since the beginning of 2019.
@@ -31,8 +29,6 @@ After migrating all of my storage and jails away from TrueNAS CORE to my new Fre
 As [this second FreeBSD server]([url](https://x.com/subnetspider/status/1555282371448111104)) which at one point was my TrueNAS CORE server, already had all of its four SATA ports used up (two SSDs as the boot pool, as well as two HDDs as the storage pool), I removed all the disks and installed them in another PC.
 This way I can replace the old 4 TB disks one by one with the new 18 TB disks without having to remove them and degrade the ZFS pool, but still maintain the redundancy of the mirror until the very end.
 
----
-
 ## Commands
 
 The commands I uses to accomplish the goal are the following:
@@ -48,8 +44,6 @@ The commands I uses to accomplish the goal are the following:
 - [zpool-online(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=zpool-online(8))) - take physical devices offline in ZFS storage pool
 
 I have linked the corresponding man pages if you want to read more about them.
-
----
 
 ## Getting started
 
@@ -280,7 +274,7 @@ data-pool      16.4T  1.53T  14.8T        -         -     0%     9%  1.00x    ON
     gpt/HDD23  16.4T      -      -        -         -      -      -      -    ONLINE
 ```
 
-### Conclusion
+## Conclusion
 
 You have now (hopefully) successfully upgraded the disks in your ZFS pool and are ready to use the additional capacity.
 The old disks can now be safely removed from your server and/or reused for other projects.
