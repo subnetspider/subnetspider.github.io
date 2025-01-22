@@ -9,7 +9,7 @@ tags: FreeBSD HAProxy CARP Reverse_Proxy
 
 ### Goal
 
-The goal of this blog post is to set up HAProxy as a reverse proxy on two FreeBSD hosts with CARP for fault tolerance, so that you can still access services if one of the hosts fails.
+The goal of this blog post is to set up HAProxy as a reverse proxy on two FreeBSD hosts with CARP for fault tolerance, so that you can still access your services if one of the hosts fails.
 
 ## Background
 
