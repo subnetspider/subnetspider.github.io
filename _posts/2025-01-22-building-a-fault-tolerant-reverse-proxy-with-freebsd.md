@@ -29,10 +29,23 @@ I have also tried out OpenBSD's `[relayd](https://man.openbsd.org/relayd.8)`, wh
 
 To get started, you will need two FreeBSD hosts, which can be either physical hosts, virtual machines, or VNET jails.
 I assume that you have already set up two FreeBSD systems, created a non-root user, and set up an ssh login and sudo/doas for elevated privileges.
+For commands that require root privileges I will use `doas`, you can also use `sudo` instead.
 
 ### CARP
 
+To automatiacally load the `carp.ko` kernel module at boot, add the following line to the end of `/boot/loader.conf`:
+```shell
+carp_load="YES"
+```
 
+Next, run the following command to load the `carp.ko` kernel module:
+```
+doas kldload carp
+```
+
+> ℹ️ Note
+> If you want to set up CARP in a VNET jail, you will need to edit `/boot/loader.conf` of the FreeBSD host.
+> You will also need to load the `carp.ko` kernel module from the host, if you don't want to reboot it.
 
 ## Conclusion
 
