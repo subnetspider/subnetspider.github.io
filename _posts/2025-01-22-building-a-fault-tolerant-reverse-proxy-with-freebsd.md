@@ -29,8 +29,7 @@ For commands that require root privileges I will use `doas`, you can also use `s
 
 To get started, you will need two FreeBSD hosts, which can be either physical hosts, virtual machines, or VNET jails.
 I assume that you have already set up two FreeBSD systems, created a non-root user, and set up an ssh login and sudo/doas for elevated privileges.
-I also assume that you have already set up DNS hostnames for all your hosts and services.
-
+I also assume that you have already set up DNS hostnames for all your hosts and services and know how to request TLS certificates from Let's Encrypt or ZeroSSL.
 
 ### CARP
 
@@ -92,7 +91,41 @@ You can learn more about CARP in the FreeBSD Handbook.: [Common Address Redundan
 
 ### HAProxy
 
-### TLS certificate
+
+
+
+### Firewall
+
+If you run a firewall like PF, make sure to add HTTP, HTTPS and CARP to your `/etc/pf.conf`:
+
+```shell
+# Macros
+ext_if = vnet0
+icmp_types = "{ unreach, squench, echoreq, timex, paramprob }"
+icmp6_types = "{ unreach, toobig, timex, paramprob, echoreq, neighbradv, neighbrsol, routeradv, routersol }"
+
+# Default Rules
+set block-policy drop
+set skip on lo
+block in log all
+pass out all
+
+# SSH
+pass in on $ext_if inet6 proto tcp from 2003:abcd:ef12:3420::/60 to any port = ssh
+pass in on $ext_if inet6 proto tcp from 2003:abcd:ef12:34a1::/64 to any port = ssh
+pass in on $ext_if inet6 proto tcp from fd5e:d1c2:c9de:20::/64 to any port = ssh
+pass in on $ext_if inet6 proto tcp from fd5f:a747:658d:20::/64 to any port = ssh
+
+# Ping and IPv6 requirements
+pass in on $ext_if inet proto icmp icmp-type $icmp_types
+pass in on $ext_if inet6 proto icmp6 icmp6-type $icmp6_types
+
+# CARP
+pass quick on $ext_if proto carp
+
+# HAProxy
+pass in proto tcp to port { http, https }
+```
 
 ## Conclusion
 
