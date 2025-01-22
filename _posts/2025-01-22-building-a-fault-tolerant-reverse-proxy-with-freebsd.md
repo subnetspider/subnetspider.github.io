@@ -19,7 +19,7 @@ However, this wasn't an option for me as the WAF on Sophos XG does not support I
 Although Sophos XG introduced the ability to request free TLS certificates from Let's Encrypt with SFOS 21, it does not support requesting wildcard certificates.
 
 As I already have some familiarity with using HAProxy as a reverse proxy to get rid of invalid TLS certificate warnings, this is what I chose.
-I have also tried out OpenBSD's `[relayd](https://man.openbsd.org/relayd.8)`, which I liked, but wasn't able to get it running the way I wanted.
+I have also tried out OpenBSD's [`relayd`](https://man.openbsd.org/relayd.8), which I liked, but wasn't able to get it running the way I wanted.
 
 ## Commands
 
@@ -280,7 +280,8 @@ backend TORRENT
 backend UNIFI
   description unifi controller
   mode http
-  server unifi 10.1.12.2:8443 ssl verify none check # IPv4-only :(
+  # The UniFi Controller doesn't support IPv6, so I have to use IPv4 here.
+  server unifi 10.1.12.2:8443 ssl verify none check
   stick-table type ip size 50k expire 30m  
   stick on src
 
@@ -323,7 +324,7 @@ I currently request my TLS certificates with [acme.sh](https://github.com/acmesh
 
 ### Firewall
 
-If you run a firewall like PF, make sure to add HTTP, HTTPS and CARP to your `/etc/pf.conf`:
+If you run a firewall like `pf`, make sure to allow HTTP, HTTPS and CARP in your `/etc/pf.conf`:
 
 ```shell
 # Macros
