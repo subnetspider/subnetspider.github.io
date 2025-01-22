@@ -302,10 +302,10 @@ doas haproxy -f /usr/local/etc/haproxy.conf -c
 Most of these settings are the result of reading many tutorials, man pages and trial and error.
 I am not a HAProxy expert, so do a little research before you decide to expose this setup to the world wild web.
 Here are some of the resources I haves used in the past:
-- https://www.youtube.com/watch?v=CxamHNc3U4A
-- https://www.haproxy.org/download/3.0/doc/configuration.txt
-- https://andyleonard.com/2011/02/01/haproxy-and-keepalived-example-configuration/
-- https://sleeplessbeastie.eu/2018/03/08/how-to-define-basic-authentication-on-haproxy/
+- [https://www.youtube.com/watch?v=CxamHNc3U4A](https://www.youtube.com/watch?v=CxamHNc3U4A)
+- [https://www.haproxy.org/download/3.0/doc/configuration.txt](https://www.haproxy.org/download/3.0/doc/configuration.txt)
+- [https://andyleonard.com/2011/02/01/haproxy-and-keepalived-example-configuration/](https://andyleonard.com/2011/02/01/haproxy-and-keepalived-example-configuration/)
+- [https://sleeplessbeastie.eu/2018/03/08/how-to-define-basic-authentication-on-haproxy/](https://sleeplessbeastie.eu/2018/03/08/how-to-define-basic-authentication-on-haproxy/)
 
 If you want to run HAProxy on OPNsense, I highly recommend this HowTo:
 - https://forum.opnsense.org/index.php?topic=23339.0
