@@ -28,7 +28,7 @@ I have also tried out OpenBSD's `[relayd](https://man.openbsd.org/relayd.8)`, wh
 - [pkg(7)](https://man.freebsd.org/cgi/man.cgi?query=pkg) - a utility for manipulating packages
 - [haproxy(1)](https://man.freebsd.org/cgi/man.cgi?query=haproxy) - fast and reliable http	reverse	proxy and load balancer
 - [ifconfig(8)](https://man.freebsd.org/cgi/man.cgi?query=ifconfig) - configure network interface parameters
-- [kldload](https://man.freebsd.org/cgi/man.cgi?query=kldload)(8) - load a file into the kernel
+- [kldload(8)](https://man.freebsd.org/cgi/man.cgi?query=kldload) - load a file into the kernel
 
 ## Getting started
 
