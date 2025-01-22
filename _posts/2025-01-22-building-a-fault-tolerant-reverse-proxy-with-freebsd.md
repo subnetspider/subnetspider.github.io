@@ -23,13 +23,14 @@ I have also tried out OpenBSD's `[relayd](https://man.openbsd.org/relayd.8)`, wh
 
 ## Commands
 
-
+For commands that require root privileges I will use `doas`, you can also use `sudo` instead.
 
 ## Getting started
 
 To get started, you will need two FreeBSD hosts, which can be either physical hosts, virtual machines, or VNET jails.
 I assume that you have already set up two FreeBSD systems, created a non-root user, and set up an ssh login and sudo/doas for elevated privileges.
-For commands that require root privileges I will use `doas`, you can also use `sudo` instead.
+I also assume that you have already set up DNS hostnames for all your hosts and services.
+
 
 ### CARP
 
@@ -46,6 +47,52 @@ doas kldload carp
 > ℹ️ Note
 > If you want to set up CARP in a VNET jail, you will need to edit `/boot/loader.conf` of the FreeBSD host.
 > You will also need to load the `carp.ko` kernel module from the host, if you don't want to reboot it.
+
+#### Networking
+
+Next, you will need to set up CARP VIPs (virtual IP addresses) in `/etc/rc.conf`:
+
+**Host 1**
+```
+hostname="haproxy01.example.net"
+
+# IPv4
+ifconfig_vnet0="inet 10.1.60.201/24"
+defaultrouter="10.1.60.1"
+
+# IPv6
+ifconfig_vnet0_ipv6="inet6 2003:abcd:ef12:3460:d:22ff:fe50:3d0b/64"
+ifconfig_vnet0_alias0="inet6 fd5e:d1c2:c9de:60:d:22ff:fe50:3d0b/64"
+ipv6_defaultrouter="2003:abcd:ef12:3460::1"
+
+# CARP VIPs
+ifconfig_vnet0_alias1="inet vhid 1 advskew 0 pass very-secure-password alias 10.1.60.200/32"
+ifconfig_vnet0_alias2="inet6 vhid 1 advskew 0 pass very-secure-password alias fd5e:d1c2:c9de:60::200/128"
+```
+
+**Host 2**
+```
+hostname="haproxy02.example.net"
+
+# IPv4
+ifconfig_vnet0="inet 10.1.60.202/24"
+defaultrouter="10.1.60.1"
+
+# IPv6
+ifconfig_vnet0_ipv6="inet6 2003:abcd:ef12:3460:420:99ff:feeb:2969/64"
+ifconfig_vnet0_alias0="inet6 fd5e:d1c2:c9de:60:420:99ff:feeb:2969/64"
+ipv6_defaultrouter="2003:abcd:ef12:3460::1"
+
+# CARP VIPs
+ifconfig_vnet0_alias1="inet vhid 1 advskew 100 pass very-secure-password alias 10.1.60.200/32"
+ifconfig_vnet0_alias2="inet6 vhid 1 advskew 1ß0 pass very-secure-password alias fd5e:d1c2:c9de:60::200/128"
+```
+
+You can learn more about CARP in the FreeBSD Handbook.: [Common Address Redundancy Protocol (CARP)](https://docs.freebsd.org/en/books/handbook/advanced-networking/#carp)
+
+### HAProxy
+
+### TLS certificate
 
 ## Conclusion
 
