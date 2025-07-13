@@ -28,3 +28,6 @@ exclude:
 
 switch_light: ☀️
 switch_dark: 🌑
+
+minima:
+  skin: dark
