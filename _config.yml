@@ -8,26 +8,22 @@ lang: en
 icon: 😈
 
 #--------------------------------------------------
-# Social Media
-#--------------------------------------------------
-github_username: subnetspider
-twitter_username: subnetspider
-mastodon:
-- username: subnetspider
-  instance: mastodon.bsd.cafe
-
-#--------------------------------------------------
 # General options
 #--------------------------------------------------
-#url-pretty: "subnetspider.com"
-
 exclude:
   - CNAME
   - LICENSE
   - README.md
 
-switch_light: ☀️
-switch_dark: 🌑
-
 minima:
   skin: dark
+  social_links:
+    - title: GitHub
+      icon: github
+      url: "https://github.com/subnetspider"
+    - title: X (formerly Twitter)
+      icon: x-twitter
+      url: "https://x.com/subnetspider"
+    - title: Mastodon
+      icon: mastodon
+      url: "https://mastodon.bsd.cafe/@subnetspider"
