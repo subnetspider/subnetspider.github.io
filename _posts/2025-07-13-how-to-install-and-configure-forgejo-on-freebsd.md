@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to install and configure Forgejo on FreeBSD.md"
+title: "How to install and configure Forgejo on FreeBSD"
 date: 2025-07-13
 tags: FreeBSD Forgejo Git
 ---
