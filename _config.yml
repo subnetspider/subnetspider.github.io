@@ -1,7 +1,7 @@
 #--------------------------------------------------
 # Site settings
 #--------------------------------------------------
-theme: minima
+remote_theme: "jekyll/minima@1e8a445"
 title: subnetspider.com
 author: subnetspider
 lang: en
