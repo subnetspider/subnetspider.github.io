@@ -27,3 +27,9 @@ minima:
     - title: Mastodon
       icon: mastodon
       url: "https://mastodon.bsd.cafe/@subnetspider"
+
+#--------------------------------------------------
+# RSS Feed
+#--------------------------------------------------
+plugins:
+  - jekyll-feed
