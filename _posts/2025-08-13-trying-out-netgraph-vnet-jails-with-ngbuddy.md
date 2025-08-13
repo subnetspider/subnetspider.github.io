@@ -286,6 +286,10 @@ public
   vtnet0 (lower): RX 2.28 MB, TX 2.39 MB
 ```
 
+In conclusion, thanks to the ngbuddy ([Netgraph Buddy](https://github.com/bellhyve/ngbuddy)) package, it was very easy to get started with Netgraph.
+Compared to running VNET jails with `bridge` and `epair`, I found this approach much cleaner, so I may end up using this in future instead.
+I am looking forward to trying it out with FreeBSD installed on physical hardware to see what performance I can achieve.
+
 ---
 
 ## Commands
