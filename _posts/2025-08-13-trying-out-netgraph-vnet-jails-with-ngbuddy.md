@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Trying out Netgraph VNET Jails with ngbuddy.md"
+title: "Trying out Netgraph VNET Jails with ngbuddy"
 date: 2025-08-13
 tags: FreeBSD VNET Jail Netgraph
 ---
