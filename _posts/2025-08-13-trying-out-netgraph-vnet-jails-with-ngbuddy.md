@@ -7,20 +7,22 @@ tags: FreeBSD VNET Jail Netgraph
 
 ## Context
 
-After reading the latest FreeBSD Journal "[Netgraph for the Rest of Us](https://freebsdfoundation.org/our-work/journal/browser-based-edition/networking-3/netgraph-for-the-rest-of-us/)" by Daniel J. Bell, I discovering the tool `ngbuddy(8)` and wanted to try it out.
-I actually wanted to try Netgraph for a while now, but I could never figure out how to configure it manually, as it is rather complicated.
+After reading the latest FreeBSD Journal "[Netgraph for the Rest of Us](https://freebsdfoundation.org/our-work/journal/browser-based-edition/networking-3/netgraph-for-the-rest-of-us/)" by Daniel J. Bell, I discovering the tool `ngbuddy(8)`, and immediately wanted to try it out myself.
+I actually wanted to experiment with Netgraph for a while now, but I could never figure out how to configure it manually, as it is rather complicated.
 However, this seemed like the perfect opportunity, so I installed FreeBSD 14.3-RELEASE in a fresh VM on my second Proxmox VE and created a couple of Bastille VNET jails, which I modified to use Netgraph.
 
 ---
 
 ## Steps
 
-Installing the necessary packages:
+Here are the steps I've used to get everything up and running, minus setting up the FreeBSD hosts itself (pkg repos, doas, ssh, etc.):
+
+**Installing the necessary packages:**
 ```shell
 doas pkg install -y bastille ngbuddy
 ```
 
-Setting up ngbuddy:
+**Setting up ngbuddy:**
 ```shell
 doas service ngbuddy enable
 ```
@@ -31,7 +33,7 @@ ngbuddy_public_if:  -> bridge0
 ngbuddy_private_if:  -> nghost0
 ```
 
-Starting ngbuddy:
+**Starting ngbuddy:**
 ```shell
 doas service ngbuddy start
 ```
@@ -40,32 +42,32 @@ Starting ngbuddy.
 Created 3 links.
 ```
 
-Running bastille setup:
+**Running bastille setup:**
 ```shell
 doas bastille setup
 ```
 
-Disabling pf, as I don't need NAT with bastille0 right now:
+**Disabling pf, as I don't need NAT with bastille0 right now:**
 ```shell
 doas service pf onedisable
 ```
 
-Bootstrapping and patching FreeBSD 14.3:
+**Bootstrapping and patching FreeBSD 14.3:**
 ```shell
 doas bastille bootstrap 14.3-RELEASE update
 ```
 
-Creating a VNET jail:
+**Creating a VNET jail:**
 ```shell
 doas bastille create -V jail05 14.3-RELEASE DHCP vtnet0
 ```
 
-Stopping the VNET jail:
+**Stopping the VNET jail:**
 ```shell
 doas bastille stop jail05
 ```
 
-Edit the VNEt jail:
+**Editing the VNEt jail's jail.conf:**
 ```shell
 doas bastille edit jail05
 ```
@@ -92,7 +94,7 @@ jail05 {
 }
 ```
 
-Edit the VNET jail's rc.conf:
+**Editing the VNET jail's rc.conf:**
 ```shell
 doas bastille edit jail05 root/etc/rc.conf
 ```
@@ -107,7 +109,7 @@ sendmail_msp_queue_enable="NO"
 cron_flags="-J 60"
 ```
 
-Start the netgraph VNET jail:
+**Starting the netgraph VNET jail:**
 ```shell
 doas bastille start jail05
 ```
@@ -116,7 +118,7 @@ doas bastille start jail05
 jail05: created
 ```
 
-Testing if DHCP is working:
+**Checking if DHCP is working:**
 ```shell
 doas bastille cmd jail05 ifconfig vnet0
 ```
