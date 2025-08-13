@@ -292,7 +292,7 @@ public
 
 The commands I have used:
 
-- [ngbuddy(8)]([url](https://man.freebsd.org/cgi/man.cgi?query=ngbuddy) - Simplified netgraph(4)	manager	for jail(8) and	bhyve(8)
+- [ngbuddy(8)](https://man.freebsd.org/cgi/man.cgi?query=ngbuddy) - Simplified netgraph(4)	manager	for jail(8) and	bhyve(8)
 - [bastille(8)](https://man.freebsd.org/cgi/man.cgi?query=bastille) - Bastille is an open-source system for automating deployment and management of containerized	applications on	FreeBSD.
 - [doas(1)](https://man.freebsd.org/cgi/man.cgi?query=doas) - execute commands as another user
 - [ngctl(8)](https://man.freebsd.org/cgi/man.cgi?query=ngctl) - netgraph control utility
