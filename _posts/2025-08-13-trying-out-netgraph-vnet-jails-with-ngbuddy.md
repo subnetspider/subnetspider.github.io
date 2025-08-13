@@ -5,7 +5,7 @@ date: 2025-08-13
 tags: FreeBSD VNET Jail Netgraph
 ---
 
-After reading the latest FreeBSD Journal "[Netgraph for the Rest of Us]([url](https://freebsdfoundation.org/our-work/journal/browser-based-edition/networking-3/netgraph-for-the-rest-of-us/)" by Daniel J. Bell and discovering the tool `ngbuddy(8)`, I wanted to try it myself.
+After reading the latest FreeBSD Journal "[Netgraph for the Rest of Us](https://freebsdfoundation.org/our-work/journal/browser-based-edition/networking-3/netgraph-for-the-rest-of-us/)" by Daniel J. Bell and discovering the tool `ngbuddy(8)`, I wanted to try it myself.
 I actually wanted to try Netgraph for a while now, but I could never figure out how to configure it manually, as it is rather complicated.
 However, this seemed like the perfect opportunity, so I installed FreeBSD 14.3-RELEASE in a fresh VM on my second Proxmox VE and created a couple of Bastille VNET jails.
 I then modified these to use Netgraph interfaces:
