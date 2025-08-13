@@ -254,8 +254,8 @@ As you can generate Graphs to visualize Netgraph deployments, I went ahead and m
 doas ngctl dot
 ```
 
-Since the command `ngctl dot | dot -T png -o netgraph.png` I found on the Klara Systems article "[Using Netgraph for FreeBSD’s Bhyve Networking](https://klarasystems.com/articles/using-netgraph-for-freebsds-bhyve-networking/)" only threw me the error "dot: graph is too large for cairo-renderer bitmaps. Scaling by 0.00850981 to fit", I used a online version of `praphwiz` and converted the SVG file to a PNG:
-<img width="3317" height="1271" alt="graphviz" src="https://github.com/user-attachments/assets/fe3b3fcc-70b6-4913-8822-3d01e969d29d" />
+Since the command `ngctl dot | dot -T png -o netgraph.png` I found on the Klara Systems article "[Using Netgraph for FreeBSD’s Bhyve Networking](https://klarasystems.com/articles/using-netgraph-for-freebsds-bhyve-networking/)" only threw me the error "dot: graph is too large for cairo-renderer bitmaps. Scaling by 0.00850981 to fit", I used a online version of `graphviz` and converted the SVG file to a PNG:
+<img width="3317" height="1271" alt="ngctl dot output rendered with graphviz" src="https://github.com/user-attachments/assets/fe3b3fcc-70b6-4913-8822-3d01e969d29d" />
 
 Some other useful commands are:
 
