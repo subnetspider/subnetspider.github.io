@@ -15,4 +15,4 @@ While I try to give good advice, I can make mistakes, so please do your own rese
 I only post here when I feel like it and have enough time, so posts will be irregular and spontainous.
 
 You can best reach me via my Mastodon account on mastodon.bsd.cafe.
-If you want to chat privately, send your email to <my-name>@<my-name>.com or write me on Signal via <my-name>.01.
+If you want to chat privately, send your email to `<my-name>@<my-name>.com` or write me on Signal via `<my-name>.01`.
