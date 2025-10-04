@@ -246,6 +246,9 @@ Aug 13 20:06:19 freebsd-nas-2 kernel: bridge60: mac address 00:00:5e:00:01:03 vl
 Aug 13 20:06:19 freebsd-nas-2 kernel: bridge60: mac address 00:00:5e:00:01:04 vlan 0 moved from e0a_unbound03 to lagg0.60
 Aug 13 20:06:20 freebsd-nas-2 kernel: bridge60: mac address 00:00:5e:00:01:01 vlan 0 moved from lagg0.60 to e0a_adguard03
 ```
+> **Update** (2025-10-04)
+> This problem was caused by missing firewall rules on the jails, which caused both jails's CARP VIP to become MASTER.
+> After allowing CARP traffic through, the log messaged stopped and failover works flawlessly.
 
 With Netgraph, there were no such log entries, and `ping` to the CARP VIP configure on two of the Netgraph VNET jails worked without a hitch.
 
