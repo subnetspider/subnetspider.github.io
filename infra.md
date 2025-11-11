@@ -78,6 +78,8 @@ Last modified: 2025-11-11
 
 - Ubiquiti UniFi U6+
 
+---
+
 # Services
 
 ## FreeBSD Jails
