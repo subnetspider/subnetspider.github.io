@@ -1,5 +1,5 @@
 ---
-title: Infra
+title: Network
 author: subnetspider
 description: subnetspider's home network infrastructure
 ---
