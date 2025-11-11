@@ -1,7 +1,7 @@
 ---
 title: Infra
 author: subnetspider
-description: subnetspider's infrastructure
+description: subnetspider's home network infrastructure
 ---
 
 ## Devices and services of my home network
@@ -9,6 +9,8 @@ description: subnetspider's infrastructure
 Last modified: 2025-11-11
 
 # Hardware
+
+The following hardware powers my home network. Most of which is second-hand, because I can't resist a good deal for used enterprise gear.
 
 ## FreeBSD Server 1
 
@@ -57,8 +59,8 @@ Last modified: 2025-11-11
 
 ## Router
 
-- Juniper SRX300 Firewall
-- ISP GPON Fibre Modem
+- Juniper SRX300 Firewall + ISP GPON Fibre Modem
+> Services: PPPoE, DHCPv6-PD, and NAT
 
 ## Firewall
 
@@ -68,11 +70,13 @@ Last modified: 2025-11-11
 - Storage: Crucial P5 Plus SSD 500GB M.2 NVMe
 - Case: Fujitsu Esprimo D757 E90+
 - NET: Intel i340-T4 (4x 1 Gbit/s RJ45)
+> Services: DHCP, SLAAC, DNS, CARP, IPSec, WireGuard, NAT64 (Tayga)
+> HAProxy (WIP), ACME (WIP), Zenarmor
 
 ## Switch
 
-- Rack: 2x Brocade ICX6430-24 (stacked)
-- Desk: Juniper EX2200-C-12P-2G
+- 2x Brocade ICX6430-24 (stacked)
+- Juniper EX2200-C-12P-2G (desk)
 
 ## Wireless Access Point
 
@@ -81,6 +85,8 @@ Last modified: 2025-11-11
 ---
 
 # Services
+
+This is the software that I use to run services on my home network. Almost everything runs on FreeBSD, inside VNET jails, which are managed by Bastille and Ansible. The main reason I use VNET jails is that I can treat them as standalone systems, each with their own IPv6 (and sometimes IPv4) address and local PF firewall instance. A couple of years ago, before iXsystems parted ways with FreeBSD, many of these services ran on FreeNAS and, later, TrueNAS CORE. As the only other services not running in jails were Samba for Windows shares and NFS for my Proxmox VE's ISOs, I decided to go full FreeBSD, never looking back.
 
 ## FreeBSD Jails
 
@@ -109,4 +115,5 @@ Last modified: 2025-11-11
 
 - FreeBSD Zabbix Server 6
 - FreeBSD Jail Host
-- Windows Server 2022 Minecraft Server
+- Minecraft Server (Windows Server 2022)
+- Lots of temorary VMs for testing
