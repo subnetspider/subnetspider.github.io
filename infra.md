@@ -54,3 +54,57 @@ Last modified: 2025-11-11
   - 2x Kingston A2000 NVMe PCIe SSD 500GB (vm, mirror)
 - Case: Inter-Tech 4088 Rev.2
 - NET: Intel i350-T4 (4x 1 Gbit/s RJ45)
+
+## Router
+
+- Juniper SRX300 Firewall
+- ISP GPON Fibre Modem
+
+## Firewall
+
+- OS: OPNsense 25.7.7
+- CPU: Intel Core i3-6100
+- RAM: 8 GiB DDR4-2400
+- Storage: Crucial P5 Plus SSD 500GB M.2 NVMe
+- Case: Fujitsu Esprimo D757 E90+
+- NET: Intel i340-T4 (4x 1 Gbit/s RJ45)
+
+## Switch
+
+- Rack: 2x Brocade ICX6430-24 (stacked)
+- Desk: Juniper EX2200-C-12P-2G
+
+## Wireless Access Point
+
+- Ubiquiti UniFi U6+
+
+# Services
+
+## FreeBSD Jails
+
+- Certbox (LetsEncrypt)
+- Gitea (private Git)
+- Nextcloud
+- HAProxy (reverse proxy)
+- Homebox (inventory)
+- NSD (DNS name server)
+- Unbound (DNS resolver)
+- AdGuard Home (DNS adblocker)
+- NFS
+- Plex Media Server
+- Samba
+- Syncthing
+- Transmission (*BSD ISO hosting)
+- UniFi Controller
+- Vaultwarden
+- Zabbix Server 7 (WIP)
+
+## Promox LCXs
+
+- NetBox
+
+## Proxmox VMs
+
+- FreeBSD Zabbix Server 6
+- FreeBSD Jail Host
+- Windows Server 2022 Minecraft Server
