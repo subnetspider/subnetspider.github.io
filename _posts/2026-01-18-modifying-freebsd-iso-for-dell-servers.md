@@ -43,4 +43,60 @@ First, the ISO installer to be modified needs to be downloaded:
 ```shell
 wget https://download.freebsd.org/releases/amd64/amd64/ISO-IMAGES/15.0/FreeBSD-15.0-RELEASE-amd64-disc1.iso
 ```
+---
 
+To avoid confusion, the modified ISO file is renamed:
+```bash
+mv FreeBSD-15.0-RELEASE-amd64-disc1.iso FreeBSD-15.0-RELEASE-amd64-DELL.iso
+```
+
+Next, we install the program `growisofs` to modify the ISO file:
+```bash
+sudo apt install growisofs
+```
+
+Next, we read information from the ISO file and store the information in the variable `volid`:
+```bash
+volid=$(isoinfo -d -i FreeBSD-15.0-RELEASE-amd64-DELL.iso | awk '/Volume id/{print$3}')
+```
+
+> **Optional**: Check whether the variable has been created correctly:
+> ```bash
+> admin@pop-os:~$ echo $volid
+> 15_0_RELEASE_AMD64_CD
+> ```
+
+Now we create the empty file `loader.conf.local` and store the following data in it:
+```bash
+touch loader.conf.local
+```
+
+```bash
+echo 'hw.mfi.mrsas_enable="1"' > loader.conf.local
+```
+
+> **Optional**: Check whether the file was populated correctly:
+> ```bash
+> admin@pop-os:~$ cat loader.conf.local 
+> hw.mfi.mrsas_enable="1"
+> ```
+
+Next, we'll extend our FreeBSD installer ISO file with `loader.conf.local`:
+```bash
+growisofs -M FreeBSD-15.0-RELEASE-amd64-DELL.iso -d -l -r -V "$volid" -graft-points /boot/loader.conf.local=loader.conf.local
+```
+
+Now we can copy the resulting ISO file to a USB stick. I used the software Ventoy for this.
+
+FreeBSD can now be installed on the Dell server as usual.
+Once the installation is complete, create the file `/boot/loader.conf.local` on the freh FreeBSD install:
+```shell
+ee /boot/loader.conf.local
+```
+
+Enter the following and then save + exit the file with pressing the Esc key.
+```shell
+hw.mfi.mrsas_enable="1"
+```
+
+After that, the USB stick can be removed and the server restarted—done.
