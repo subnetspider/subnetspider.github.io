@@ -23,7 +23,8 @@ To remedy there issues, I wanted to upgrade the NAS with a AM5 board and CPU, bu
 
 As I didn't want to spend 1200€ just for a 64 GiB DDR5 kit what only cost 180€ a couple weeks ago, I chose to buy a used Dell PowerEdge R530 instead.
 It already came with 64 GiB of DDR4 preinstalled, which I promptly upgraded to 128 GiB, as prices for used DDR4 server RAM is fairly manageable.
-When I first installed FreeBSD on the Dell R530, I noticed a lot of write and i/o errors on the console, which lead me to writing this post.
+While it's a bit more power hungry than my old FreeBSD NAS, it has enough RAM and CPU power to also retire my Proxmox VE host, so here we are.
+However, when I first installed FreeBSD on the Dell R530, I noticed lots of write and I/O errors on the console, which lead me to write this post.
 
 ## Not all LSI SAS HBA are made equally
 
@@ -88,9 +89,13 @@ sudo growisofs -M FreeBSD-14.3-RELEASE-amd64-DELL.iso -d -l -r -V "$volid" -graf
 ```
 
 Now we can copy the resulting ISO file to a USB stick. I used the software Ventoy for this.
-
 FreeBSD can now be installed on the Dell server as usual.
-Once the installation is complete, create the file `/boot/loader.conf.local` on the freh FreeBSD install:
+
+
+Once the installation is complete, select "Yes" when promted for "Manual Configuration":
+<img width="563" height="222" alt="image" src="https://github.com/user-attachments/assets/2ebfd3a6-9d9e-4cf6-8466-c1cf02809a98" />
+
+Now, create the file `/boot/loader.conf.local` on the freh FreeBSD install:
 ```shell
 ee /boot/loader.conf.local
 ```
@@ -101,6 +106,10 @@ hw.mfi.mrsas_enable="1"
 ```
 
 After that, the USB stick can be removed and the server restarted — done. :)
+1. Esc
+2. a) leave editor
+3. a) save changes
+4. shutdown -r now
 
 Before:
 <img width="571" height="227" alt="Screenshot from 2026-01-18 20-37-59" src="https://github.com/user-attachments/assets/f2de3d8a-2349-4e3f-b7b6-da88152bc07d" />
@@ -109,3 +118,6 @@ After:
 <img width="563" height="222" alt="Screenshot from 2026-01-18 20-51-24" src="https://github.com/user-attachments/assets/3ac849cc-ccf9-4876-9100-97458e9e60f2" />
 
 Apparently, you can also flash the Dell PERC H330 firmware to IT mode, but I don't think that's necessary.
+This fix should also work with other Dell servers, such as the Dell PowerEdge R730, as long as it's also using the H330.
+
+<img width="770" height="362" alt="image" src="https://github.com/user-attachments/assets/a06f62ce-a95c-4c5e-8cac-964292621296" />
