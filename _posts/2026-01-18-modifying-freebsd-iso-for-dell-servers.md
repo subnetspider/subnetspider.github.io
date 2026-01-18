@@ -33,7 +33,9 @@ It turnes out that FreeBSD needs the [mrsas(4)]([url](https://man.freebsd.org/cg
 While I was able to get an old Install of FreeBSD to run on the Dell server, I wasn't able to boot a fresh install, as the FreeBSD installer used the old and imcompatible [mfi(4)]([url](https://man.freebsd.org/cgi/man.cgi?query=mfi(4))) driver.
 
 Manually setting the correct sysctl in the Installer's shell isn't possible, as it's a "read only tuneable".
+
 <img width="559" height="139" alt="hw mfi mrsas_enable" src="https://github.com/user-attachments/assets/c9fd78d2-652f-41e7-9a60-686ea353f5ce" />
+
 To remedy this, I decided to modify the ISO of the FreeBSD installer, so it will use the correct driver during the installation process.
 
 ## Modification steps
@@ -93,6 +95,7 @@ FreeBSD can now be installed on the Dell server as usual.
 
 
 Once the installation is complete, select "Yes" when promted for "Manual Configuration":
+
 <img width="563" height="222" alt="image" src="https://github.com/user-attachments/assets/2ebfd3a6-9d9e-4cf6-8466-c1cf02809a98" />
 
 Now, create the file `/boot/loader.conf.local` on the freh FreeBSD install:
@@ -112,9 +115,11 @@ After that, the USB stick can be removed and the server restarted — done. :)
 4. shutdown -r now
 
 Before:
+
 <img width="571" height="227" alt="Screenshot from 2026-01-18 20-37-59" src="https://github.com/user-attachments/assets/f2de3d8a-2349-4e3f-b7b6-da88152bc07d" />
 
 After:
+
 <img width="563" height="222" alt="Screenshot from 2026-01-18 20-51-24" src="https://github.com/user-attachments/assets/3ac849cc-ccf9-4876-9100-97458e9e60f2" />
 
 Apparently, you can also flash the Dell PERC H330 firmware to IT mode, but I don't think that's necessary.
