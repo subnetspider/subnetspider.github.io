@@ -98,7 +98,7 @@ Once the installation is complete, select "Yes" when promted for "Manual Configu
 
 <img width="563" height="222" alt="image" src="https://github.com/user-attachments/assets/2ebfd3a6-9d9e-4cf6-8466-c1cf02809a98" />
 
-Now, create the file `/boot/loader.conf.local` on the freh FreeBSD install:
+Now, create the file `/boot/loader.conf.local` on the fresh FreeBSD install:
 ```shell
 ee /boot/loader.conf.local
 ```
