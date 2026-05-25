@@ -16,15 +16,14 @@ The following hardware powers my home network. Most of which is second-hand, bec
 
 > Used for hosting services with jails.
 
-- OS: FreeBSD 14.3-RELEASE-p5
-- Motherboard: Supermicro X10SLH-F
-- CPU: Intel Xeon E3-1231 v3
-- RAM: 4x Samsung 8 GiB DDR3L-1600 ECC
+- OS: FreeBSD 14.4-RELEASE-p5
+- Platform: Dell PowerEdge R530
+- CPU: Intel Xeon E5-1650 v4
+- RAM: 4x SK-Hynix 32 GiB DDR4-2400 ECC
 - Storage:
   - 2x Intel SSD DC S3500 120GB SATA (zroot, mirror)
   - 2x HGST Ultrastar SSD400M 200GB SAS (pool01, special mirror)
   - 2x Toshiba Enterprise Capacity MG09ACA 18TB SATA (pool01, mirror)
-- Case: Inter-Tech Inter-Tech IPC 4U-4408
 - HBA: Broadcom LSI 9211-8i (8x 6Gbit/s SAS)
 - NET: Intel X710-DA2 (2x 10 Gbit/s SFP+)
 
@@ -32,7 +31,7 @@ The following hardware powers my home network. Most of which is second-hand, bec
 
 > Used for storing offline backups.
 
-- OS: FreeBSD 14.3-RELEASE-p5
+- OS: FreeBSD 14.4-RELEASE-p5
 - Motherboard: Supermicro X10SLL-F
 - CPU: Intel Xeon E3-1220 v3
 - RAM: 2x Transcend 8 GiB DDR3-1600 ECC
@@ -42,6 +41,20 @@ The following hardware powers my home network. Most of which is second-hand, bec
 - Case: Supermicro CSE-825
 - HBA: Broadcom LSI 9211-8i (8x 6Gbit/s SAS)
 - NET: Chelsio T520-CT (2x 10 Gbit/s SFP+)
+
+## FreeBSD Server 3
+
+> Used for storing offsite backups and parent's NAS.
+
+- OS: FreeBSD 15.0-RELEASE-p9
+- Motherboard: ASUS P9D-I
+- CPU: Intel Core i3-4170
+- RAM: 2x Micron 8 GiB DDR3-1600 ECC
+- Storage:
+  - 2x Intel SSD DC S3500 80GB (boot, mirror)
+  - 2x Toshiba Enterprise Capacity MG09ACA 18TB SATA (data-pool, mirror)
+- Case: Fractal Design Node 304
+- NET: 2x Intel I210 (on-board)
 
 ## Proxmox Server 1
 
