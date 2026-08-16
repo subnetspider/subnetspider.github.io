@@ -229,6 +229,8 @@ Now the .iso file of the FreeBSD Installer is mounted on the remove system and i
 
 > Select "Finish > No > Reboot" to finish the installation and reboot the system.
 
+You can now remove your USB stick, DVD, or unmount the .ISO in your IPMI / BMC.
+
 ---
 
 ### Conclusion 
