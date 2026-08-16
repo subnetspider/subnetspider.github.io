@@ -231,6 +231,8 @@ Now the .iso file of the FreeBSD Installer is mounted on the remove system and i
 
 You can now remove your USB stick, DVD, or unmount the .ISO in your IPMI / BMC.
 
+<img width="1004" height="255" alt="image" src="https://github.com/user-attachments/assets/9cac697b-b706-4a07-ad6b-cd4577346268" />
+
 ---
 
 ### Conclusion 
